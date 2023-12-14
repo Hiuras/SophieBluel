@@ -112,6 +112,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 const titleElement = document.createElement("h3");
                 titleElement.textContent = project.title;
 
+                projectElement.dataset.imageId = project.id;
+
                 projectElement.appendChild(imageElement);
                 projectElement.appendChild(titleElement);
 
@@ -188,34 +190,6 @@ function redirectToLogin() {
     function closeModal2() {
         document.querySelector('.modale').classList.remove('modal--open');
         resetModal();
-    }
-
-    function updateGalleryModalWithImages() {
-        let galleryImages = document.querySelectorAll('.gallery img');
-        let galleryModal = document.querySelector('.gallery__modal');
-    
-        galleryModal.innerHTML = '';
-    
-        galleryImages.forEach((image, index) => {
-            let imageId = image.parentNode.dataset.imageId;
-    
-            let imgContainer = document.createElement("div");
-            imgContainer.classList.add("modal-image-container");
-    
-            let imgClone = image.cloneNode(true);
-            imgContainer.appendChild(imgClone);
-    
-            let buttonElement = document.createElement("button");
-            buttonElement.style.backgroundImage = 'url("assets/images/trash-can-solid.png")';
-            buttonElement.style.border = "none";
-            buttonElement.addEventListener("click", function() {
-                deleteImageFromApi(imageId);
-                galleryImages[index].parentNode.remove();
-            });
-            imgContainer.appendChild(buttonElement);
-    
-            galleryModal.appendChild(imgContainer);
-        });
     }
 
     function resetModal() {
@@ -362,7 +336,7 @@ function redirectToLogin() {
     }
 
     /*Supression des images*/
-
+    
     function deleteImageFromApi(imageId) {
         const token = getAccessToken();
     
@@ -391,5 +365,33 @@ function redirectToLogin() {
         })
         .catch(error => {
             console.error('Erreur lors de la suppression de l\'image depuis l\'API :', error.message);
+        });
+    }
+
+        function updateGalleryModalWithImages() {
+        let galleryImages = document.querySelectorAll('.gallery img');
+        let galleryModal = document.querySelector('.gallery__modal');
+    
+        galleryModal.innerHTML = '';
+    
+        galleryImages.forEach((image, index) => {
+            let imageId = image.parentNode.dataset.imageId;
+    
+            let imgContainer = document.createElement("div");
+            imgContainer.classList.add("modal-image-container");
+    
+            let imgClone = image.cloneNode(true);
+            imgContainer.appendChild(imgClone);
+    
+            let buttonElement = document.createElement("button");
+            buttonElement.style.backgroundImage = 'url("assets/images/trash-can-solid.png")';
+            buttonElement.style.border = "none";
+            buttonElement.addEventListener("click", function() {
+                deleteImageFromApi(imageId);
+                galleryImages[index].parentNode.remove();
+            });
+            imgContainer.appendChild(buttonElement);
+    
+            galleryModal.appendChild(imgContainer);
         });
     }
