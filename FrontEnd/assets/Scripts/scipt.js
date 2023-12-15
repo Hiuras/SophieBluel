@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     /*Verification du token*/
-    const storedToken = localStorage.getItem("user");
+    const storedToken = sessionStorage.getItem("user");
     console.log("Token dans localStorage sur index.html:", storedToken);
     //
 
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function deletetoken() {
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
     window.location.href = "login.html";
 }
 
@@ -269,7 +269,7 @@ function redirectToLogin() {
     /*UPLOAD DES IMAGES*/
 
     function getAccessToken() {
-        return localStorage.getItem("user");
+        return sessionStorage.getItem("user");
     }
 
     function uploadImage() {

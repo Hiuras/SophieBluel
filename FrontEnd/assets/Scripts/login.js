@@ -23,7 +23,7 @@ try {
 
         console.log("Token:", userdata);
 
-        localStorage.setItem("user", userdata);
+        sessionStorage.setItem("user", userdata);
         
         document.location.href = "index.html";
     } else {
