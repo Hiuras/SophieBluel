@@ -218,6 +218,7 @@ margin: auto;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin-left: 0;
 }
 #contact label {
 	margin: 2em 0 1em 0;
