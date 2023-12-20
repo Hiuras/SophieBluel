@@ -205,10 +205,17 @@ function redirectToLogin() {
         categorySelect.value = 'default';
         imagePreview.src = 'assets/images/picture-svgrepo-com 1.png';
     
+
         document.getElementById('upload-button').style.display = 'block';
         document.getElementById('upload-text').style.display = 'block';
-        document.getElementById('image-preview').src = 'assets/images/picture-svgrepo-com 1.png';
-        document.getElementById('image-preview').style.height = 'auto';
+    
+        imagePreview.src = 'assets/images/picture-svgrepo-com 1.png';
+        imagePreview.style.height = '76px';
+        imagePreview.style.width = '76px';
+        imagePreview.style.marginLeft = '171px';
+    
+        imagePreview.classList.remove('dynamic-image');
+        imagePreview.classList.add('logoPreview');
     
         validerButton.classList.remove('green-button');
     }
@@ -236,35 +243,54 @@ function redirectToLogin() {
         }    
     });
 
-    /*PREVIEW DES IMAGES POUR UPLOAD*/
+/* PREVIEW DES IMAGES POUR UPLOAD */
 
-    function selectAndPreview() {
-        let fileInput = document.getElementById('file-input');
-        fileInput.click();
-    
-        fileInput.addEventListener("change", function() {
-            let file = fileInput.files[0];
-    
-            if (file) {
-                displayImagePreview(file);
-    
-                document.getElementById('upload-button').style.display = 'none';
-                document.getElementById('upload-text').style.display = 'none';
+function selectAndPreview() {
+    let fileInput = document.getElementById('file-input');
+    fileInput.click();
+
+    fileInput.addEventListener("change", function() {
+        let file = fileInput.files[0];
+
+        if (file) {
+            displayImagePreview(file);
+
+            document.getElementById('upload-button').style.display = 'none';
+            document.getElementById('upload-text').style.display = 'none';
+        }
+    });
+}
+
+function displayImagePreview(file) {
+    let reader = new FileReader();
+
+    reader.onload = function(e) {
+        let imagePreview = document.getElementById('image-preview');
+        imagePreview.src = e.target.result;
+
+        imagePreview.style.height = ''; 
+
+        imagePreview.classList.add("dynamic-image");
+
+        let img = new Image();
+        img.src = e.target.result;
+        img.onload = function() {
+            if (img.height > img.width) {
+                imagePreview.style.width = '30%';
+                imagePreview.style.height = '100%';
+                imagePreview.style.marginLeft = '144px';
+            } else {
+                imagePreview.style.width = '100%';
+                imagePreview.style.height = '100%';
+                imagePreview.style.marginLeft = '0px';
             }
-        });
-    }
-    
-    function displayImagePreview(file) {
-        let reader = new FileReader();
-    
-        reader.onload = function(e) {
-            let imagePreview = document.getElementById('image-preview');
-            imagePreview.src = e.target.result;
-            imagePreview.style.height = '100%';
         };
-    
-        reader.readAsDataURL(file);
-    }
+    };
+
+    reader.readAsDataURL(file);
+}
+
+
 
     /*UPLOAD DES IMAGES*/
 
